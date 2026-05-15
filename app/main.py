@@ -2,10 +2,12 @@ from fastapi import FastAPI
 
 from app.database import Base, engine
 
-# from app.routes.usuario_routes import router as usuario_router
-# from app.routes.registro_pescador_routes import router as registro_router
-# from app.routes.pontos_coleta_routes import router as ponto_router
-# from app.routes.relatorio_routes import router as relatorio_router
+from .routes import (
+    usuario_routes,
+    relatorio_routes,
+    registro_pescador_routes,
+    pontos_coleta_routes
+)
 
 
 Base.metadata.create_all(bind=engine)
@@ -15,6 +17,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.include_router(usuario_routes.router)
+app.include_router(relatorio_routes.router)
+app.include_router(registro_pescador_routes.router)
+app.include_router(pontos_coleta_routes.router)
+
 
 @app.get("/")
 def home():
@@ -22,9 +29,4 @@ def home():
     return {
         "mensagem": "API funcionando"
     }
-
-
-# app.include_router(usuario_router)
-# app.include_router(registro_router)
-# app.include_router(ponto_router)
-# app.include_router(relatorio_router)
+    
