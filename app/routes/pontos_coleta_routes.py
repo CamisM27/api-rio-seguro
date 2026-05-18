@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-import database 
+from ..database import get_db
 
 router = APIRouter(
     prefix="/api/v1/pontos-coleta",
@@ -7,14 +7,14 @@ router = APIRouter(
 )
 
 @router.get("/")
-def listar_pontos(db = Depends(database)):
+def listar_pontos(db = Depends(get_db)):
     # Query para listar todos os pontos de coleta cadastrados
     return {
         "mensagem": "Retorna todos os pontos de coleta geográficos"
     }
 
 @router.post("/")
-def criar_ponto(ponto: dict, db = Depends(database)):
+def criar_ponto(ponto: dict, db = Depends(get_db)):
     # Logica para criar ponto
     return {
         "mensagem": "Novo ponto de coleta adicionado"

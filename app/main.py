@@ -6,7 +6,8 @@ from .routes import (
     usuario_routes,
     relatorio_routes,
     registro_pescador_routes,
-    pontos_coleta_routes
+    pontos_coleta_routes,
+    teste_qualidade_routes
 )
 
 
@@ -21,6 +22,7 @@ app.include_router(usuario_routes.router)
 app.include_router(relatorio_routes.router)
 app.include_router(registro_pescador_routes.router)
 app.include_router(pontos_coleta_routes.router)
+app.include_router(teste_qualidade_routes.router)
 
 
 @app.get("/")
