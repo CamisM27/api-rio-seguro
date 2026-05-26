@@ -1,7 +1,8 @@
 from fastapi import Header, HTTPException
 from app.auth.jwt_handler import validar_token
 
-def validar_usuario_logado(
+
+def usuario_autenticado(
     authorization: str = Header(None)
 ):
 
@@ -22,7 +23,7 @@ def validar_usuario_logado(
 
         raise HTTPException(
             status_code=401,
-            detail="Formato inválido"
+            detail="Token inválido"
         )
 
     payload = validar_token(
@@ -33,7 +34,7 @@ def validar_usuario_logado(
 
         raise HTTPException(
             status_code=401,
-            detail="Token inválido ou expirado"
+            detail="Token expirado ou inválido"
         )
 
     return payload
