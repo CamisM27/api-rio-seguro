@@ -1,19 +1,45 @@
-from sqlalchemy import Column, Integer, String, Date, LargeBinary
+from sqlalchemy import (Column, Integer, String, Date, LargeBinary, Boolean)
 from app.database import Base
 
+
 class Usuario(Base):
+
     __tablename__ = "tbl_usuario"
 
-    id_usuario = Column(Integer, primary_key=True, autoincrement=True)
+    id_usuario = Column(
+        Integer,
+        primary_key=True,
+        autoincrement=True
+    )
 
-    nome = Column(String(100), nullable=False)
+    nome = Column(
+        String(100),
+        nullable=False
+    )
 
-    data_nascimento = Column(Date, nullable=False)
+    data_nascimento = Column(
+        Date,
+        nullable=False
+    )
 
-    telefone = Column(String(20))
+    telefone = Column(
+        String(20)
+    )
 
-    email = Column(String(100))
+    email = Column(
+        String(100)
+    )
 
-    foto_perfil = Column(LargeBinary)
+    foto_perfil = Column(
+        LargeBinary
+    )
 
-    tipo_usuario = Column(String(50))
+    tipo_usuario = Column(
+        String(50)
+    )
+
+    ativo = Column(
+        Boolean,
+        default=True,
+        nullable=False
+    )
