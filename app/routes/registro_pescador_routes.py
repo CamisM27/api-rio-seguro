@@ -1,5 +1,8 @@
 from fastapi import APIRouter, Depends
 from ..database import get_db
+from app.auth.auth_dependency import (
+    usuario_autenticado
+)
 
 router = APIRouter(
     prefix="/api/v1/pescadores",
