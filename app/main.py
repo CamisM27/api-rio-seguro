@@ -7,7 +7,8 @@ from .routes import (
     relatorio_routes,
     registro_pescador_routes,
     pontos_coleta_routes,
-    teste_qualidade_routes
+    teste_qualidade_routes,
+    auth_routes
 )
 
 
@@ -23,7 +24,7 @@ app.include_router(relatorio_routes.router)
 app.include_router(registro_pescador_routes.router)
 app.include_router(pontos_coleta_routes.router)
 app.include_router(teste_qualidade_routes.router)
-
+app.include_router(auth_routes.router)
 
 @app.get("/")
 def home():
