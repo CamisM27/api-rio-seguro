@@ -1,23 +1,102 @@
 from fastapi import APIRouter, Depends
-from ..database import get_db
+from sqlalchemy.orm import Session
+
+from app.database import get_db
+
+from app.auth.auth_dependency import (
+    usuario_autenticado
+)
+
+from app.schema.teste_qualidade_schema import (
+    RegistroTesteCreate,
+    RegistroTesteResponse,
+    RegistroTesteUpdate
+)
+
+from app.services.teste_qualidade_service import (
+    criar_registro_teste,
+    atualizar_registro_teste,
+    deletar_registro_teste,
+    listar_registros_teste,
+    visualizar_registro_teste
+)
 
 router = APIRouter(
-    prefix="/api/v1/teste",
-    tags=["Teste qualidade de água"]
+    prefix="/registro-teste",
+    tags=["Registro Teste"],
+    dependencies=[
+        Depends(usuario_autenticado)
+    ]
 )
 
 
-@router.get("")
-def listar_testes(id_usuario: int, db = Depends(get_db)):
-    # Lista os testes da qualidade da água
-    return {
-        "mensagem": f"Retorna o teste de qualidade da água"
-    }
+@router.get(
+    "/",
+    response_model=list[RegistroTesteResponse]
+)
+def listar_relatorios(
+    db: Session = Depends(get_db)
+):
 
-@router.post("")
-def criar_testes(id_usuario: int, db = Depends(get_db)):
-    # Emitir teste da qualidade da água
-    return {
-        "mensagem": f"Cria o teste de qualidade da água"
-    }
+    return listar_registros_teste(db)
 
+
+@router.get(
+    "/{id_teste}",
+    response_model=RegistroTesteResponse
+)
+def visualizar_relatorio(
+    id_teste: int,
+    db: Session = Depends(get_db)
+):
+
+    return visualizar_registro_teste(
+        db,
+        id_teste
+    )
+
+
+@router.post(
+    "/",
+    response_model=RegistroTesteResponse
+)
+def cadastrar_registro(
+    registro: RegistroTesteCreate,
+    db: Session = Depends(get_db)
+):
+
+    return criar_registro_teste(
+        db,
+        registro
+    )
+
+
+@router.put(
+    "/{registro_id}",
+    response_model=RegistroTesteResponse
+)
+def atualizar_registro(
+    registro_id: int,
+    registro: RegistroTesteUpdate,
+    db: Session = Depends(get_db)
+):
+
+    return atualizar_registro_teste(
+        db,
+        registro_id,
+        registro
+    )
+
+
+@router.delete(
+    "/{registro_id}"
+)
+def deletar_registro(
+    registro_id: int,
+    db: Session = Depends(get_db)
+):
+
+    return deletar_registro_teste(
+        db,
+        registro_id
+    )

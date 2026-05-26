@@ -78,7 +78,10 @@ class RegistroTeste(Base):
     fosfatos = Column(
         Integer
     )
+    pontuacao_total = Column(Integer)
 
+    qualidade_agua = Column(String(20))
+    
     id_usuario = Column(
         Integer,
         ForeignKey("tbl_usuario.id_usuario"),
