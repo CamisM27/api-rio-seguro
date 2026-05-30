@@ -1,9 +1,13 @@
 from fastapi import Header, HTTPException
+
 from app.auth.jwt_handler import validar_token
 
 
 def usuario_autenticado(
-    authorization: str = Header(None)
+    authorization: str = Header(
+        default=None,
+        alias="Authorization"
+    )
 ):
 
     if not authorization:
@@ -15,9 +19,7 @@ def usuario_autenticado(
 
     try:
 
-        token = authorization.split(
-            " "
-        )[1]
+        token = authorization.split(" ")[1]
 
     except IndexError:
 
