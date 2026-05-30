@@ -1,33 +1,31 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import date
 from typing import Optional
-from pydantic import EmailStr
 
 
 class UsuarioBase(BaseModel):
 
     nome: str
-
     data_nascimento: date
-
     telefone: Optional[str] = None
-
-    email: Optional[EmailStr] = None
-
+    email: EmailStr
     tipo_usuario: Optional[str] = None
 
+
+class UsuarioCreate(
+    UsuarioBase
+):
+
     foto_perfil: Optional[bytes] = None
-    
-    ativo: Optional[bool] = True
 
 
-class UsuarioCreate(UsuarioBase):
-    pass
-
-
-class UsuarioResponse(UsuarioBase):
+class UsuarioResponse(
+    UsuarioBase
+):
 
     id_usuario: int
+    ativo: bool
 
     class Config:
+
         from_attributes = True
