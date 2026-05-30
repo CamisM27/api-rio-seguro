@@ -38,7 +38,9 @@ def listar_relatorios(
     db: Session = Depends(get_db)
 ):
 
-    return listar_registros_teste(db)
+    return listar_registros_teste(
+        db
+    )
 
 
 @router.get(
@@ -61,13 +63,16 @@ def visualizar_relatorio(
     response_model=RegistroTesteResponse
 )
 def cadastrar_registro(
-    registro: RegistroTesteCreate,
+    registro_data: RegistroTesteCreate,
+    usuario_logado=Depends(
+        usuario_autenticado
+    ),
     db: Session = Depends(get_db)
 ):
-
     return criar_registro_teste(
-        db,
-        registro
+    db,
+    registro_data,
+    usuario_logado
     )
 
 
@@ -77,14 +82,17 @@ def cadastrar_registro(
 )
 def atualizar_registro(
     registro_id: int,
-    registro: RegistroTesteUpdate,
+    registro_data: RegistroTesteUpdate,
+    usuario_logado=Depends(
+        usuario_autenticado
+    ),
     db: Session = Depends(get_db)
 ):
-
     return atualizar_registro_teste(
         db,
         registro_id,
-        registro
+        registro_data,
+        usuario_logado
     )
 
 

@@ -1,4 +1,4 @@
-from sqlalchemy import (Column, Integer, String, DateTime,  ForeignKey)
+from sqlalchemy import (Column, Integer, String, Float, DateTime, ForeignKey)
 
 from app.database import Base
 
@@ -7,11 +7,7 @@ class RegistroTeste(Base):
 
     __tablename__ = "tbl_registro_teste"
 
-    id_teste = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=True
-    )
+    id_teste = Column(Integer, primary_key=True, autoincrement=True)
 
     data_teste = Column(
         DateTime,
@@ -19,7 +15,7 @@ class RegistroTeste(Base):
     )
 
     transparencia_agua = Column(
-        Integer,
+        Float,
         nullable=False
     )
 
@@ -29,7 +25,7 @@ class RegistroTeste(Base):
     )
 
     residuos_margem = Column(
-        String(70),
+        String(50),
         nullable=False
     )
 
@@ -39,57 +35,51 @@ class RegistroTeste(Base):
     )
 
     material_sedimentavel = Column(
-        String(20),
+        String(30),
         nullable=False
     )
 
-    peixes = Column(
+    peixes = Column(String(20))
+
+    larvas_vermes_vermelhos = Column(
         String(20)
     )
 
-    larvas_vermes_vermelhos = Column(
-        String(10)
-    )
-
     larvas_vermes_conchas = Column(
-        String(10)
+        String(20)
     )
 
-    coliformes = Column(
-        Integer
-    )
+    coliformes = Column(Float)
 
-    oxigenio_od1 = Column(
-        Integer
-    )
+    oxigenio_od1 = Column(Float)
 
-    oxigenio_od5 = Column(
-        Integer
-    )
+    oxigenio_od5 = Column(Float)
 
     potencial_hidrogenionico = Column(
-        Integer
+        Float,
+        nullable=False
     )
 
-    nitrato = Column(
-        Integer
-    )
+    nitrato = Column(Float)
 
-    fosfatos = Column(
-        Integer
-    )
+    fosfatos = Column(Float)
+
     pontuacao_total = Column(Integer)
 
     qualidade_agua = Column(String(20))
-    
+
     id_usuario = Column(
         Integer,
-        ForeignKey("tbl_usuario.id_usuario"),
+        ForeignKey(
+            "tbl_usuario.id_usuario"
+        ),
         nullable=False
     )
 
     id_ponto = Column(
         Integer,
-        ForeignKey("tbl_pontos_coleta.id_ponto"),
+        ForeignKey(
+            "tbl_pontos_coleta.id_ponto"
+        ),
         nullable=False
     )
